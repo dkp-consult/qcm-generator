@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" type="text/css" href="./styles/quizz.css">
+</head>
+<body>
+    <!-- Section d'encodage pour ajouter des questions et réponses -->
+    <div id="encodingSection">
+        <button onclick="ajouterQuestion()">Ajouter Question</button>
+        <button onclick="genererPreview()">Générer le code</button>
+    </div>
+
+    <!-- Section de prévisualisation du QCM -->
+    <div id="previewSection">
+
+    </div>
+
+    <!-- Section du code -->
+    <div id="codeSection">
+        <textarea id="codeOutput" rows="10" cols="50" placeholder="Le code généré apparaîtra ici..."></textarea>
+        <button onclick="copierCode()">Copier le Code</button>
+    </div>
+
+
+
+    <script src="./js/quizz.js"></script>
+</body>
+</html>

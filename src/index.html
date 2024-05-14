@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <link rel="stylesheet" type="text/css" href="quizz.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="m-0 p-0">
+
+  <!-- Navbar -->
+  <nav class="bg-white fixed inset-x-0 top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-center items-center h-16">
+        <!-- Logo au centre -->
+        <a href="#" class="flex items-center">
+          <img src="https://oye-oye.net/wp-content/uploads/sites/51/2023/06/OYE-OYE_logo.svg" alt="Logo"
+            class="h-15 w-15 mr-2 pt-10">
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Btn under navbar -->
+  <div class="pt-16 mt-8"> <!-- space for navbar -->
+    <div class="bg-white shadow-md fixed inset-x-0 top-16 z-40"> <!-- Position sous la navbar -->
+      <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap justify-between items-center gap-2">
+        <!-- Groupe de boutons gauche & droit -->
+        <div class="flex flex-1 justify-center sm:justify-start flex-wrap mt-10">
+          <button onclick="ajouterQuestion()"
+            class="px-2 my-1 mx-1 py-1 sm:px-2 sm:py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 w-full sm:w-auto">
+            Ajouter Question
+          </button>
+          <button onclick="genererPreview()"
+            class="px-2 my-1 mx-1 py-1 sm:px-2 sm:py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 w-full sm:w-auto">
+            Générer le code
+          </button>
+        </div>
+
+        <div class="flex flex-1 justify-center sm:justify-end flex-wrap mt-10">
+          <button id="openModal"
+            class="px-2 py-1 my-1 mx-1 sm:px-4 sm:py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 w-full sm:w-auto">
+            Instructions
+          </button>
+          <button id="btnGenerer"
+            class="px-2 py-1 my-1 mx-1 sm:px-2 sm:py-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300 w-full sm:w-auto">
+            Générer Vue Live
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Main content -->
+  <main class="pt-16 mt-14">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Générateur de Quizz</h1>
+
+    <div class="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto px-4">
+      <!-- Section d'encodage pour ajouter des questions et réponses -->
+      <div id="encodingSection" class="md:w-1/2 overflow-y-auto max-h-[450px]">
+        <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Encodez vos questions ici</h2>
+        <p>Cocher la bulle à côté de la réponse correcte afin que votre quizz soit généré correctement.</p>
+        <!-- Contenu de encodingSection ici -->
+      </div>
+
+
+      <!-- Section du code -->
+      <div id="codeSection" class="md:w-1/2 space-y-4 max-h-[400px]">
+        <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center">Voici le code de votre Quizz</h2>
+        <p>Copier celui-ci et intégrer le dans une balise code sur votre page, article, etc.</p>
+        <textarea id="codeOutput" rows="10" cols="50" placeholder="Le code généré apparaîtra ici..."
+          class="w-full p-2 border rounded resize-none"></textarea>
+        <div class="text-right">
+          <button onclick="copierCode()"
+            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">Copier le
+            Code</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- IFrame pour la prévisualisation -->
+    <div class="max-w-4xl mx-auto px-4 mt-8 w-auto border border-gray-400 rounded-lg shadow-xl">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3 text-center my-3">Prévisualise le Quizz</h2>
+      <iframe id="vueLive" class="" style="height: 400px;"></iframe>
+    </div>
+  </main>
+
+
+  <footer class="bg-gray-800 text-white mt-5">
+    <div
+      class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left flex-wrap">
+      <div class="text-sm mb-4 md:mb-0">
+        &copy; 2024 Tous droits réservés.
+      </div>
+      <div class="text-sm">
+        Conçu et développé par <a href="https://dkp-consult.be"
+          class="text-orange-500 hover:text-orange-700">dkp-consult</a>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!-- Modal with instruction content -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen">
+      <div class="bg-white p-5 rounded-lg shadow-lg w-3/4 md:w-1/2">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Instructions pour la Création et l'Intégration du Quizz</h2>
+
+        <ol class="list-decimal list-inside space-y-2">
+          <li>
+            <strong>Ajout de Questions et de Réponses :</strong> Commencez par ajouter les questions ainsi que leurs
+            propositions de réponses dans la zone d'encodage prévue à cet effet. Il est impératif de sélectionner la
+            réponse correcte pour chaque question en utilisant la case à cocher située à droite de chaque réponse.
+          </li>
+          <li>
+            <strong>Ajouter une Nouvelle Question :</strong> Pour insérer une nouvelle question, utilisez le bouton
+            situé en haut à gauche, intitulé "Ajouter une question". Chaque clic sur ce bouton générera un nouveau champ
+            pour entrer une question et ses propositions de réponses.
+          </li>
+          <li>
+            <strong>Génération du Code :</strong> Une fois que vous avez introduit toutes vos questions et sélectionné
+            les réponses correctes, cliquez sur le bouton "Générer le code". Copiez le code généré en utilisant le
+            bouton prévu à cet effet.
+          </li>
+          <li>
+            <strong>Prévisualisation du Quizz :</strong> Si vous souhaitez visualiser à quoi ressemblera votre Quizz avant
+            de l'intégrer, vous pouvez utiliser le bouton de prévisualisation situé à droite. Cela vous donnera un
+            aperçu et la possibilité de tester celui-ci.
+          </li>
+          <li>
+            <strong>Assistance :</strong> En cas de problème ou si vous avez besoin d'aide supplémentaire, n'hésitez pas
+            à nous contacter. Veuillez envoyer un mail, en fournissant une description détaillée du problème rencontré,
+            accompagnée si possible de captures d'écran <a
+              href="mailto:support@petitfute.be;contact@dkp-consult.be?subject=Problèmes rencontré sur le générateur de Quizz"" class="
+              text-blue-500 hover:text-blue-600">par mail</a>.
+          </li>
+        </ol>
+        <button id="closeModal"
+          class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+  <script src="quizz.js"></script>
+
+</body>
+
+</html>

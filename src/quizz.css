@@ -1,0 +1,32 @@
+/* Styles CSS pour améliorer l'apparence du quiz */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.questionBlock, #previewSection, #codeSection {
+    margin-bottom: 20px;
+}
+
+.question {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+input[type="text"], textarea {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+#resultats {
+    margin-top: 20px;
+}
+
+.correct {
+    background-color: lightgreen;
+}
+
+.incorrect {
+    background-color: lightcoral;
+}
