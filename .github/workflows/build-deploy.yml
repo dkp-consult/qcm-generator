@@ -38,4 +38,4 @@ jobs:
           port: 21
           security: 'loose'
           local-dir: dist/
-          server-dir: /qcm-generator/
+          server-dir: qcm-generator/
